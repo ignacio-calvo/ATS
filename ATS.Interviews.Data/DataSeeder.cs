@@ -19,16 +19,16 @@ namespace ATS.Interviews.Data
                 Name = "REST",
                 Questions = new List<Question>
                                     {
-                                        new Question { Text = "What is REST?", Hint = "Representational State Transfer", Order = 1 },
-                                        new Question { Text = "What are HTTP methods?", Hint = "GET, POST, PUT, DELETE, etc.", Order = 2 },
-                                        new Question { Text = "What is the difference between PUT and POST?", Hint = "PUT is idempotent, POST is not", Order = 3 },
-                                        new Question { Text = "What is CORS?", Hint = "Cross-Origin Resource Sharing", Order = 4 },
-                                        new Question { Text = "How do you secure a REST API?", Hint = "Authentication, Authorization, HTTPS", Order = 5 },
-                                        new Question { Text = "What are HTTP status codes?", Hint = "200 OK, 404 Not Found, 500 Internal Server Error, etc.", Order = 6 },
-                                        new Question { Text = "What is an idempotent operation?", Hint = "An operation that can be applied multiple times without changing the result", Order = 7 },
-                                        new Question { Text = "What is the purpose of HTTP headers?", Hint = "To pass additional information with the request or response", Order = 8 },
-                                        new Question { Text = "What is a RESTful service?", Hint = "A service that follows REST principles", Order = 9 },
-                                        new Question { Text = "What is the difference between synchronous and asynchronous requests?", Hint = "Synchronous waits for the response, asynchronous does not", Order = 10 }
+                                        new Question { Text = "What is REST?", Hint = "Representational State Transfer", Order = 1 , InputType = InputType.Rating},
+                                        new Question { Text = "What are HTTP methods?", Hint = "GET, POST, PUT, DELETE, etc.", Order = 2, InputType = InputType.Rating },
+                                        new Question { Text = "What is the difference between PUT and POST?", Hint = "PUT is idempotent, POST is not", Order = 3 , InputType = InputType.Rating},
+                                        new Question { Text = "What is CORS?", Hint = "Cross-Origin Resource Sharing", Order = 4 , InputType = InputType.Rating},
+                                        new Question { Text = "How do you secure a REST API?", Hint = "Authentication, Authorization, HTTPS", Order = 5 , InputType = InputType.Rating},
+                                        new Question { Text = "What are HTTP status codes?", Hint = "200 OK, 404 Not Found, 500 Internal Server Error, etc.", Order = 6 , InputType = InputType.Rating},
+                                        new Question { Text = "What is an idempotent operation?", Hint = "An operation that can be applied multiple times without changing the result", Order = 7 , InputType = InputType.Rating},
+                                        new Question { Text = "What is the purpose of HTTP headers?", Hint = "To pass additional information with the request or response", Order = 8 , InputType = InputType.Rating},
+                                        new Question { Text = "What is a RESTful service?", Hint = "A service that follows REST principles", Order = 9 , InputType = InputType.Rating},
+                                        new Question { Text = "What is the difference between synchronous and asynchronous requests?", Hint = "Synchronous waits for the response, asynchronous does not", Order = 10 , InputType = InputType.Rating}
                                     }
             };
 
@@ -37,16 +37,16 @@ namespace ATS.Interviews.Data
                 Name = ".NET",
                 Questions = new List<Question>
                                     {
-                                        new Question { Text = "What is .NET?", Hint = "A software development framework", Order = 1 },
-                                        new Question { Text = "What is the CLR?", Hint = "Common Language Runtime", Order = 2 },
-                                        new Question { Text = "What is the difference between .NET Core and .NET Framework?", Hint = ".NET Core is cross-platform, .NET Framework is Windows-only", Order = 3 },
-                                        new Question { Text = "What is garbage collection?", Hint = "Automatic memory management", Order = 4 },
-                                        new Question { Text = "What are assemblies in .NET?", Hint = "Compiled code libraries", Order = 5 },
-                                        new Question { Text = "What is dependency injection?", Hint = "A design pattern for managing dependencies", Order = 6 },
-                                        new Question { Text = "What is ASP.NET Core?", Hint = "A framework for building web applications", Order = 7 },
-                                        new Question { Text = "What is Entity Framework?", Hint = "An ORM for .NET", Order = 8 },
-                                        new Question { Text = "What is LINQ?", Hint = "Language Integrated Query", Order = 9 },
-                                        new Question { Text = "What is the difference between a class and an object?", Hint = "A class is a blueprint, an object is an instance", Order = 10 }
+                                        new Question { Text = "What is .NET?", Hint = "A software development framework", Order = 1 , InputType = InputType.Rating},
+                                        new Question { Text = "What is the CLR?", Hint = "Common Language Runtime", Order = 2 , InputType = InputType.Rating},
+                                        new Question { Text = "What is the difference between .NET Core and .NET Framework?", Hint = ".NET Core is cross-platform, .NET Framework is Windows-only", Order = 3 , InputType = InputType.Rating},
+                                        new Question { Text = "What is garbage collection?", Hint = "Automatic memory management", Order = 4 , InputType = InputType.Rating},
+                                        new Question { Text = "What are assemblies in .NET?", Hint = "Compiled code libraries", Order = 5 , InputType = InputType.Rating},
+                                        new Question { Text = "What is dependency injection?", Hint = "A design pattern for managing dependencies", Order = 6 , InputType = InputType.Rating},
+                                        new Question { Text = "What is ASP.NET Core?", Hint = "A framework for building web applications", Order = 7 , InputType = InputType.Rating},
+                                        new Question { Text = "What is Entity Framework?", Hint = "An ORM for .NET", Order = 8 , InputType = InputType.Rating},
+                                        new Question { Text = "What is LINQ?", Hint = "Language Integrated Query", Order = 9 , InputType = InputType.Rating},
+                                        new Question { Text = "What is the difference between a class and an object?", Hint = "A class is a blueprint, an object is an instance", Order = 10 , InputType = InputType.Rating}
                                     }
             };
 
@@ -55,16 +55,16 @@ namespace ATS.Interviews.Data
                 Name = "Front End (React)",
                 Questions = new List<Question>
                                     {
-                                        new Question { Text = "What is JavaScript?", Hint = "A programming language for the web", Order = 1 },
-                                        new Question { Text = "What is TypeScript?", Hint = "A superset of JavaScript with static types", Order = 2 },
-                                        new Question { Text = "What is React?", Hint = "A JavaScript library for building user interfaces", Order = 3 },
-                                        new Question { Text = "What is JSX?", Hint = "JavaScript XML, a syntax extension for React", Order = 4 },
-                                        new Question { Text = "What is the virtual DOM?", Hint = "A lightweight copy of the real DOM", Order = 5 },
-                                        new Question { Text = "What are hooks in React?", Hint = "Functions that let you use state and other React features", Order = 6 },
-                                        new Question { Text = "What is the difference between state and props in React?", Hint = "State is local to a component, props are passed from parent to child", Order = 7 },
-                                        new Question { Text = "What is a component in React?", Hint = "A reusable piece of UI", Order = 8 },
-                                        new Question { Text = "What is the context API in React?", Hint = "A way to pass data through the component tree without props", Order = 9 },
-                                        new Question { Text = "What is a single-page application (SPA)?", Hint = "A web application that loads a single HTML page and dynamically updates as the user interacts with the app", Order = 10 }
+                                        new Question { Text = "What is JavaScript?", Hint = "A programming language for the web", Order = 1 , InputType = InputType.Rating},
+                                        new Question { Text = "What is TypeScript?", Hint = "A superset of JavaScript with static types", Order = 2 , InputType = InputType.Rating},
+                                        new Question { Text = "What is React?", Hint = "A JavaScript library for building user interfaces", Order = 3 , InputType = InputType.Rating},
+                                        new Question { Text = "What is JSX?", Hint = "JavaScript XML, a syntax extension for React", Order = 4 , InputType = InputType.Rating},
+                                        new Question { Text = "What is the virtual DOM?", Hint = "A lightweight copy of the real DOM", Order = 5 , InputType = InputType.Rating},
+                                        new Question { Text = "What are hooks in React?", Hint = "Functions that let you use state and other React features", Order = 6 , InputType = InputType.Rating},
+                                        new Question { Text = "What is the difference between state and props in React?", Hint = "State is local to a component, props are passed from parent to child", Order = 7 , InputType = InputType.Rating},
+                                        new Question { Text = "What is a component in React?", Hint = "A reusable piece of UI", Order = 8 , InputType = InputType.Rating},
+                                        new Question { Text = "What is the context API in React?", Hint = "A way to pass data through the component tree without props", Order = 9 , InputType = InputType.Rating},
+                                        new Question { Text = "What is a single-page application (SPA)?", Hint = "A web application that loads a single HTML page and dynamically updates as the user interacts with the app", Order = 10 , InputType = InputType.Rating}
                                     }
             };
 
@@ -73,16 +73,16 @@ namespace ATS.Interviews.Data
                 Name = "NodeJS",
                 Questions = new List<Question>
                                     {
-                                        new Question { Text = "What is NodeJS?", Hint = "A JavaScript runtime built on Chrome's V8 engine", Order = 1 },
-                                        new Question { Text = "What is npm?", Hint = "Node Package Manager", Order = 2 },
-                                        new Question { Text = "What is the difference between CommonJS and ES Modules?", Hint = "CommonJS uses require(), ES Modules use import/export", Order = 3 },
-                                        new Question { Text = "What is an event loop in NodeJS?", Hint = "A mechanism that handles asynchronous operations", Order = 4 },
-                                        new Question { Text = "What is Express.js?", Hint = "A web application framework for NodeJS", Order = 5 },
-                                        new Question { Text = "What is middleware in Express.js?", Hint = "Functions that execute during the lifecycle of a request to the server", Order = 6 },
-                                        new Question { Text = "What is the purpose of package.json?", Hint = "To manage project dependencies and scripts", Order = 7 },
-                                        new Question { Text = "What is the difference between synchronous and asynchronous code in NodeJS?", Hint = "Synchronous code blocks the event loop, asynchronous code does not", Order = 8 },
-                                        new Question { Text = "What is a callback function?", Hint = "A function passed into another function as an argument", Order = 9 },
-                                        new Question { Text = "What is the purpose of the 'fs' module in NodeJS?", Hint = "To handle file system operations", Order = 10 }
+                                        new Question { Text = "What is NodeJS?", Hint = "A JavaScript runtime built on Chrome's V8 engine", Order = 1 , InputType = InputType.Rating},
+                                        new Question { Text = "What is npm?", Hint = "Node Package Manager", Order = 2 , InputType = InputType.Rating},
+                                        new Question { Text = "What is the difference between CommonJS and ES Modules?", Hint = "CommonJS uses require(), ES Modules use import/export", Order = 3 , InputType = InputType.Rating},
+                                        new Question { Text = "What is an event loop in NodeJS?", Hint = "A mechanism that handles asynchronous operations", Order = 4 , InputType = InputType.Rating},
+                                        new Question { Text = "What is Express.js?", Hint = "A web application framework for NodeJS", Order = 5 , InputType = InputType.Rating},
+                                        new Question { Text = "What is middleware in Express.js?", Hint = "Functions that execute during the lifecycle of a request to the server", Order = 6, InputType = InputType.Rating },
+                                        new Question { Text = "What is the purpose of package.json?", Hint = "To manage project dependencies and scripts", Order = 7 , InputType = InputType.Rating},
+                                        new Question { Text = "What is the difference between synchronous and asynchronous code in NodeJS?", Hint = "Synchronous code blocks the event loop, asynchronous code does not", Order = 8 , InputType = InputType.Rating},
+                                        new Question { Text = "What is a callback function?", Hint = "A function passed into another function as an argument", Order = 9 , InputType = InputType.Rating},
+                                        new Question { Text = "What is the purpose of the 'fs' module in NodeJS?", Hint = "To handle file system operations", Order = 10 , InputType = InputType.Rating}
                                     }
             };
 
