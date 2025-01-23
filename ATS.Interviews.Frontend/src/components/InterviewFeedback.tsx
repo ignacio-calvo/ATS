@@ -5,6 +5,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import InfoIcon from '@mui/icons-material/Info';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import DescriptionIcon from '@mui/icons-material/Description';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkIcon from '@mui/icons-material/Link';
 import { getInterviewById } from '../services/InterviewService';
 import { getInterviewTemplateById } from '../services/InterviewTemplateService';
 import { getFeedbacksByInterviewAndInterviewer, saveFeedback } from '../services/FeedbackService';
@@ -80,7 +84,7 @@ const InterviewFeedback: React.FC = () => {
         try {
             const filteredFeedbacks = Array.from(feedbacks.values()).map(feedback => ({
                 ...feedback,
-                capturedAt: new Date() // Actualizar la fecha y hora de captura al guardar
+                capturedAt: new Date() // Update the capture date and time when saving
             }));
             await saveFeedback(filteredFeedbacks);
             setSnackbarMessage('Feedback saved successfully!');
@@ -110,28 +114,49 @@ const InterviewFeedback: React.FC = () => {
             {interview && interview.candidate && interviewInterviewer && template && (
                 <Box>
                     <Typography variant="h6" gutterBottom>
-                        Candidate: {interview.candidate.firstName} {interview.candidate.lastName} ({interview.candidate.email})
+                        <Typography variant="body1" component="span" fontWeight="bold">Candidate:</Typography> {interview.candidate.firstName} {interview.candidate.lastName} ({interview.candidate.email})
                     </Typography>
                     <Typography variant="h6" gutterBottom>
-                        Interviewer: {interviewInterviewer.interviewer?.firstName} {interviewInterviewer.interviewer?.lastName}
+                        <Typography variant="body1" component="span" fontWeight="bold">Interviewer:</Typography> {interviewInterviewer.interviewer?.firstName} {interviewInterviewer.interviewer?.lastName}
                     </Typography>
                     <Typography variant="h6" gutterBottom>
-                        Template: {template.name}
+                        <Typography variant="body1" component="span" fontWeight="bold">Template:</Typography> {template.name}
                     </Typography>
                     {interview.jobDescriptionLink && (
                         <Typography variant="h6" gutterBottom>
-                            Job Description: <a href={interview.jobDescriptionLink} target="_blank" rel="noopener noreferrer">View Job Posting</a>
+                            <Typography variant="body1" component="span" fontWeight="bold">Job Description:</Typography> <a href={interview.jobDescriptionLink} target="_blank" rel="noopener noreferrer">View Job Posting</a>
                         </Typography>
                     )}
-                    <Typography variant="h6" gutterBottom>
-                        Candidate Links:
-                    </Typography>
-                    <ul>
-                        {interview.candidate.resumeLink && <li><a href={interview.candidate.resumeLink} target="_blank" rel="noopener noreferrer">Resume</a></li>}
-                        {interview.candidate.linkedInProfile && <li><a href={interview.candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>}
-                        {interview.candidate.gitHubProfile && <li><a href={interview.candidate.gitHubProfile} target="_blank" rel="noopener noreferrer">GitHub</a></li>}
-                        {interview.candidate.otherProfile && <li><a href={interview.candidate.otherProfile} target="_blank" rel="noopener noreferrer">Other Profile</a></li>}
-                    </ul>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+                        {interview.candidate.resumeLink && (
+                            <Tooltip title="Resume">
+                                <IconButton component="a" href={interview.candidate.resumeLink} target="_blank" rel="noopener noreferrer">
+                                    <DescriptionIcon />
+                                </IconButton>
+                            </Tooltip>
+                        )}
+                        {interview.candidate.linkedInProfile && (
+                            <Tooltip title="LinkedIn">
+                                <IconButton component="a" href={interview.candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">
+                                    <LinkedInIcon />
+                                </IconButton>
+                            </Tooltip>
+                        )}
+                        {interview.candidate.gitHubProfile && (
+                            <Tooltip title="GitHub">
+                                <IconButton component="a" href={interview.candidate.gitHubProfile} target="_blank" rel="noopener noreferrer">
+                                    <GitHubIcon />
+                                </IconButton>
+                            </Tooltip>
+                        )}
+                        {interview.candidate.otherProfile && (
+                            <Tooltip title="Other Profile">
+                                <IconButton component="a" href={interview.candidate.otherProfile} target="_blank" rel="noopener noreferrer">
+                                    <LinkIcon />
+                                </IconButton>
+                            </Tooltip>
+                        )}
+                    </Box>
                     {template.interviewTemplateSections?.map((section, sectionIndex) => (
                         <Accordion key={section.section.id}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>

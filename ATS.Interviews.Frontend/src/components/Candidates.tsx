@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, CircularProgress, Card, CardContent, CardActions, List, ListItem, ListItemText, Box, Button, IconButton, Snackbar, Alert, Grid } from '@mui/material';
+import { Typography, CircularProgress, Card, CardContent, CardActions, List, ListItem, ListItemText, Box, Button, IconButton, Snackbar, Alert, Grid, Tooltip } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DescriptionIcon from '@mui/icons-material/Description';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkIcon from '@mui/icons-material/Link';
 import { getCandidates, createCandidate, updateCandidate, deleteCandidate } from '../services/CandidateService';
 import { Candidate } from '../DTOs/Candidate';
 import CandidateForm from './CandidateForm';
@@ -127,26 +131,36 @@ const Candidates: React.FC = () => {
                                         {candidate.email}
                                     </Typography>
                                 </Box>
-                                {candidate.resumeLink && (
-                                    <Typography color="text.secondary" align="center">
-                                        Resume: <a href={candidate.resumeLink} target="_blank" rel="noopener noreferrer">{candidate.resumeLink}</a>
-                                    </Typography>
-                                )}
-                                {candidate.linkedInProfile && (
-                                    <Typography color="text.secondary" align="center">
-                                        LinkedIn: <a href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">{candidate.linkedInProfile}</a>
-                                    </Typography>
-                                )}
-                                {candidate.gitHubProfile && (
-                                    <Typography color="text.secondary" align="center">
-                                        GitHub: <a href={candidate.gitHubProfile} target="_blank" rel="noopener noreferrer">{candidate.gitHubProfile}</a>
-                                    </Typography>
-                                )}
-                                {candidate.otherProfile && (
-                                    <Typography color="text.secondary" align="center">
-                                        Other: <a href={candidate.otherProfile} target="_blank" rel="noopener noreferrer">{candidate.otherProfile}</a>
-                                    </Typography>
-                                )}
+                                <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+                                    {candidate.resumeLink && (
+                                        <Tooltip title="Resume">
+                                            <IconButton component="a" href={candidate.resumeLink} target="_blank" rel="noopener noreferrer">
+                                                <DescriptionIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    )}
+                                    {candidate.linkedInProfile && (
+                                        <Tooltip title="LinkedIn">
+                                            <IconButton component="a" href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">
+                                                <LinkedInIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    )}
+                                    {candidate.gitHubProfile && (
+                                        <Tooltip title="GitHub">
+                                            <IconButton component="a" href={candidate.gitHubProfile} target="_blank" rel="noopener noreferrer">
+                                                <GitHubIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    )}
+                                    {candidate.otherProfile && (
+                                        <Tooltip title="Other Profile">
+                                            <IconButton component="a" href={candidate.otherProfile} target="_blank" rel="noopener noreferrer">
+                                                <LinkIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    )}
+                                </Box>
                                 {candidate.interviews && candidate.interviews.length > 0 ? (
                                     <List>
                                         {candidate.interviews.map((interview) => (
@@ -188,5 +202,6 @@ const Candidates: React.FC = () => {
 };
 
 export default Candidates;
+
 
 

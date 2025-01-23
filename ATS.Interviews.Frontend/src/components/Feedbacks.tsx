@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Typography, Box, FormControl, InputLabel, Select, MenuItem, Card, CardContent, CardHeader, CircularProgress, Button } from '@mui/material';
+import { Typography, Box, FormControl, InputLabel, Select, MenuItem, Card, CardContent, CardHeader, CircularProgress, Button, Tooltip, IconButton } from '@mui/material';
+import DescriptionIcon from '@mui/icons-material/Description';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkIcon from '@mui/icons-material/Link';
 import { getInterviewers } from '../services/InterviewerService';
 import { getInterviewsByInterviewer } from '../services/InterviewService';
 import { Interview } from '../DTOs/Interview';
@@ -71,6 +75,36 @@ const Feedbacks: React.FC = () => {
                                 subheader={`Candidate: ${interview.candidate?.firstName} ${interview.candidate?.lastName} (${interview.candidate?.email})`}
                             />
                             <CardContent>
+                                <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+                                    {interview.candidate?.resumeLink && (
+                                        <Tooltip title="Resume">
+                                            <IconButton component="a" href={interview.candidate.resumeLink} target="_blank" rel="noopener noreferrer">
+                                                <DescriptionIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    )}
+                                    {interview.candidate?.linkedInProfile && (
+                                        <Tooltip title="LinkedIn">
+                                            <IconButton component="a" href={interview.candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">
+                                                <LinkedInIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    )}
+                                    {interview.candidate?.gitHubProfile && (
+                                        <Tooltip title="GitHub">
+                                            <IconButton component="a" href={interview.candidate.gitHubProfile} target="_blank" rel="noopener noreferrer">
+                                                <GitHubIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    )}
+                                    {interview.candidate?.otherProfile && (
+                                        <Tooltip title="Other Profile">
+                                            <IconButton component="a" href={interview.candidate.otherProfile} target="_blank" rel="noopener noreferrer">
+                                                <LinkIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    )}
+                                </Box>
                                 {interview.interviewInterviewers
                                     .filter(ii => ii.interviewerId === selectedInterviewerId)
                                     .map(ii => (
@@ -93,9 +127,5 @@ const Feedbacks: React.FC = () => {
 };
 
 export default Feedbacks;
-
-
-
-
 
 
