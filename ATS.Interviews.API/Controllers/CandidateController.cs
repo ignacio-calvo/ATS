@@ -43,11 +43,12 @@ namespace ATS.Interviews.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCandidate(int id, Candidate candidate)
+        public async Task<ActionResult<Candidate>> UpdateCandidate(int id, Candidate candidate)
         {
             try
             {
-                await _candidateService.UpdateCandidateAsync(id, candidate);
+                var updatedCandidate = await _candidateService.UpdateCandidateAsync(id, candidate);
+                return Ok(updatedCandidate);
             }
             catch (ArgumentException)
             {
@@ -57,9 +58,8 @@ namespace ATS.Interviews.API.Controllers
             {
                 return NotFound();
             }
-
-            return NoContent();
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCandidate(int id)

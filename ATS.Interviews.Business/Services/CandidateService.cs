@@ -30,8 +30,7 @@ namespace ATS.Interviews.Business.Services
             await _context.SaveChangesAsync();
             return candidate;
         }
-
-        public async Task UpdateCandidateAsync(int id, Candidate candidate)
+        public async Task<Candidate> UpdateCandidateAsync(int id, Candidate candidate)
         {
             if (id != candidate.Id)
             {
@@ -40,7 +39,9 @@ namespace ATS.Interviews.Business.Services
 
             _context.Entry(candidate).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+            return candidate;
         }
+
 
         public async Task DeleteCandidateAsync(int id)
         {

@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, CircularProgress, Card, CardContent, CardActions, List, ListItem, ListItemText, Box, TextField, Button } from '@mui/material';
+import { Typography, CircularProgress, Card, CardContent, CardActions, List, ListItem, ListItemText, Box, Button, IconButton, Snackbar, Alert, Grid } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import { getCandidates, createCandidate } from '../services/CandidateService';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { getCandidates, createCandidate, updateCandidate, deleteCandidate } from '../services/CandidateService';
 import { Candidate } from '../DTOs/Candidate';
+import CandidateForm from './CandidateForm';
 
 const Candidates: React.FC = () => {
     const [candidates, setCandidates] = useState<Candidate[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [newCandidateFirstName, setNewCandidateFirstName] = useState<string>('');
-    const [newCandidateLastName, setNewCandidateLastName] = useState<string>('');
-    const [newCandidateEmail, setNewCandidateEmail] = useState<string>('');
-    const [newCandidateResumeLink, setNewCandidateResumeLink] = useState<string>('');
-    const [newCandidateLinkedInProfile, setNewCandidateLinkedInProfile] = useState<string>('');
-    const [newCandidateGitHubProfile, setNewCandidateGitHubProfile] = useState<string>('');
-    const [newCandidateOtherProfile, setNewCandidateOtherProfile] = useState<string>('');
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(null);
+    const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+    const [snackbarMessage, setSnackbarMessage] = useState<string>('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
 
     useEffect(() => {
         const fetchCandidates = async () => {
@@ -31,32 +32,65 @@ const Candidates: React.FC = () => {
         fetchCandidates();
     }, []);
 
-    const handleAddCandidate = async () => {
-        const newCandidate: Candidate = {
-            id: 0, // Ensure the ID is set to 0 or omitted for new candidates
-            firstName: newCandidateFirstName,
-            lastName: newCandidateLastName,
-            email: newCandidateEmail,
-            resumeLink: newCandidateResumeLink,
-            linkedInProfile: newCandidateLinkedInProfile,
-            gitHubProfile: newCandidateGitHubProfile,
-            otherProfile: newCandidateOtherProfile,
-            interviews: []
-        };
-
+    const handleAddCandidate = async (candidate: Candidate) => {
         try {
-            const addedCandidate = await createCandidate(newCandidate);
+            const addedCandidate = await createCandidate(candidate);
             setCandidates([...candidates, addedCandidate]);
-            setNewCandidateFirstName('');
-            setNewCandidateLastName('');
-            setNewCandidateEmail('');
-            setNewCandidateResumeLink('');
-            setNewCandidateLinkedInProfile('');
-            setNewCandidateGitHubProfile('');
-            setNewCandidateOtherProfile('');
+            setIsModalOpen(false);
+            setSnackbarMessage('Candidate added successfully!');
+            setSnackbarSeverity('success');
+            setSnackbarOpen(true);
         } catch (error) {
             console.error('Error adding candidate:', error);
+            setSnackbarMessage('Error adding candidate.');
+            setSnackbarSeverity('error');
+            setSnackbarOpen(true);
         }
+    };
+
+    const handleEditCandidate = async (candidate: Candidate) => {
+        try {
+            const updatedCandidate = await updateCandidate(candidate.id, candidate);
+            console.log('Updated Candidate:', updatedCandidate); // Log the response
+            if (updatedCandidate && updatedCandidate.id) {
+                setCandidates(candidates.map(c => (c.id === updatedCandidate.id ? updatedCandidate : c)));
+                setIsModalOpen(false);
+                setSnackbarMessage('Candidate updated successfully!');
+                setSnackbarSeverity('success');
+                setSnackbarOpen(true);
+            } else {
+                throw new Error('Failed to update candidate');
+            }
+        } catch (error) {
+            console.error('Error updating candidate:', error);
+            setSnackbarMessage('Error updating candidate.');
+            setSnackbarSeverity('error');
+            setSnackbarOpen(true);
+        }
+    };
+
+    const handleDeleteCandidate = async (id: number) => {
+        try {
+            await deleteCandidate(id);
+            setCandidates(candidates.filter(candidate => candidate.id !== id));
+            setSnackbarMessage('Candidate deleted successfully!');
+            setSnackbarSeverity('success');
+            setSnackbarOpen(true);
+        } catch (error) {
+            console.error('Error deleting candidate:', error);
+            setSnackbarMessage('Error deleting candidate.');
+            setSnackbarSeverity('error');
+            setSnackbarOpen(true);
+        }
+    };
+
+    const handleOpenModal = (candidate?: Candidate) => {
+        setSelectedCandidate(candidate || null);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseSnackbar = () => {
+        setSnackbarOpen(false);
     };
 
     if (loading) {
@@ -68,112 +102,91 @@ const Candidates: React.FC = () => {
             <Typography variant="h4" gutterBottom>
                 Candidates
             </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'column', mb: 2 }}>
-                <TextField
-                    label="First Name"
-                    value={newCandidateFirstName}
-                    onChange={(e) => setNewCandidateFirstName(e.target.value)}
-                    sx={{ mb: 2 }}
-                />
-                <TextField
-                    label="Last Name"
-                    value={newCandidateLastName}
-                    onChange={(e) => setNewCandidateLastName(e.target.value)}
-                    sx={{ mb: 2 }}
-                />
-                <TextField
-                    label="Email"
-                    value={newCandidateEmail}
-                    onChange={(e) => setNewCandidateEmail(e.target.value)}
-                    sx={{ mb: 2 }}
-                />
-                <TextField
-                    label="Resume Link"
-                    value={newCandidateResumeLink}
-                    onChange={(e) => setNewCandidateResumeLink(e.target.value)}
-                    sx={{ mb: 2 }}
-                />
-                <TextField
-                    label="LinkedIn Profile"
-                    value={newCandidateLinkedInProfile}
-                    onChange={(e) => setNewCandidateLinkedInProfile(e.target.value)}
-                    sx={{ mb: 2 }}
-                />
-                <TextField
-                    label="GitHub Profile"
-                    value={newCandidateGitHubProfile}
-                    onChange={(e) => setNewCandidateGitHubProfile(e.target.value)}
-                    sx={{ mb: 2 }}
-                />
-                <TextField
-                    label="Other Profile"
-                    value={newCandidateOtherProfile}
-                    onChange={(e) => setNewCandidateOtherProfile(e.target.value)}
-                    sx={{ mb: 2 }}
-                />
-                <Button variant="contained" onClick={handleAddCandidate} disabled={!newCandidateFirstName.trim() || !newCandidateLastName.trim() || !newCandidateEmail.trim()}>
-                    Add Candidate
-                </Button>
-            </Box>
-            <List>
+            <Button variant="contained" onClick={() => handleOpenModal()} sx={{ mb: 2 }}>
+                Add Candidate
+            </Button>
+            <Grid container spacing={2}>
                 {candidates.map((candidate) => (
-                    <Card key={candidate.id} sx={{ mb: 2 }}>
-                        <CardContent>
-                            <Typography variant="h5" component="div">
-                                {candidate.firstName} {candidate.lastName}
-                            </Typography>
-                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
-                                <EmailIcon sx={{ mr: 1 }} />
-                                <Typography color="text.secondary">
-                                    {candidate.email}
+                    <Grid item xs={12} sm={6} md={4} key={candidate.id}>
+                        <Card sx={{ mb: 2, position: 'relative' }}>
+                            <CardActions sx={{ position: 'absolute', top: 0, right: 0 }}>
+                                <IconButton onClick={() => handleOpenModal(candidate)}>
+                                    <EditIcon />
+                                </IconButton>
+                                <IconButton onClick={() => handleDeleteCandidate(candidate.id)}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </CardActions>
+                            <CardContent>
+                                <Typography variant="h5" component="div" align="center">
+                                    {candidate.firstName} {candidate.lastName}
                                 </Typography>
-                            </Box>
-                            {candidate.resumeLink && (
-                                <Typography color="text.secondary">
-                                    Resume: <a href={candidate.resumeLink} target="_blank" rel="noopener noreferrer">{candidate.resumeLink}</a>
-                                </Typography>
-                            )}
-                            {candidate.linkedInProfile && (
-                                <Typography color="text.secondary">
-                                    LinkedIn: <a href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">{candidate.linkedInProfile}</a>
-                                </Typography>
-                            )}
-                            {candidate.gitHubProfile && (
-                                <Typography color="text.secondary">
-                                    GitHub: <a href={candidate.gitHubProfile} target="_blank" rel="noopener noreferrer">{candidate.gitHubProfile}</a>
-                                </Typography>
-                            )}
-                            {candidate.otherProfile && (
-                                <Typography color="text.secondary">
-                                    Other: <a href={candidate.otherProfile} target="_blank" rel="noopener noreferrer">{candidate.otherProfile}</a>
-                                </Typography>
-                            )}
-                            {candidate.interviews && candidate.interviews.length > 0 ? (
-                                <List>
-                                    {candidate.interviews.map((interview) => (
-                                        <ListItem key={interview.id}>
-                                            <CalendarTodayIcon sx={{ mr: 1 }} />
-                                            <ListItemText
-                                                primary={`Interview on ${new Date(interview.scheduledDate).toLocaleDateString()}`}
-                                                secondary={`Template: ${interview.interviewTemplate?.name || 'No template'}`}
-                                            />
-                                        </ListItem>
-                                    ))}
-                                </List>
-                            ) : (
-                                <Typography color="text.secondary">
-                                    No interviews
-                                </Typography>
-                            )}
-                        </CardContent>
-                        <CardActions>
-                            {/* Add any actions here if needed */}
-                        </CardActions>
-                    </Card>
+                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
+                                    <EmailIcon sx={{ mr: 1 }} />
+                                    <Typography color="text.secondary">
+                                        {candidate.email}
+                                    </Typography>
+                                </Box>
+                                {candidate.resumeLink && (
+                                    <Typography color="text.secondary" align="center">
+                                        Resume: <a href={candidate.resumeLink} target="_blank" rel="noopener noreferrer">{candidate.resumeLink}</a>
+                                    </Typography>
+                                )}
+                                {candidate.linkedInProfile && (
+                                    <Typography color="text.secondary" align="center">
+                                        LinkedIn: <a href={candidate.linkedInProfile} target="_blank" rel="noopener noreferrer">{candidate.linkedInProfile}</a>
+                                    </Typography>
+                                )}
+                                {candidate.gitHubProfile && (
+                                    <Typography color="text.secondary" align="center">
+                                        GitHub: <a href={candidate.gitHubProfile} target="_blank" rel="noopener noreferrer">{candidate.gitHubProfile}</a>
+                                    </Typography>
+                                )}
+                                {candidate.otherProfile && (
+                                    <Typography color="text.secondary" align="center">
+                                        Other: <a href={candidate.otherProfile} target="_blank" rel="noopener noreferrer">{candidate.otherProfile}</a>
+                                    </Typography>
+                                )}
+                                {candidate.interviews && candidate.interviews.length > 0 ? (
+                                    <List>
+                                        {candidate.interviews.map((interview) => (
+                                            <ListItem key={interview.id} sx={{ justifyContent: 'center' }}>
+                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                    <CalendarTodayIcon sx={{ mr: 1 }} />
+                                                    <ListItemText
+                                                        primary={`Interview on ${new Date(interview.scheduledDate).toLocaleDateString()}`}
+                                                        secondary={`Template: ${interview.interviewTemplate?.name || 'No template'}`}
+                                                        sx={{ textAlign: 'center' }}
+                                                    />
+                                                </Box>
+                                            </ListItem>
+                                        ))}
+                                    </List>
+                                ) : (
+                                    <Typography color="text.secondary" align="center">
+                                        No interviews
+                                    </Typography>
+                                )}
+                            </CardContent>
+                        </Card>
+                    </Grid>
                 ))}
-            </List>
+            </Grid>
+            <CandidateForm
+                open={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSave={selectedCandidate ? handleEditCandidate : handleAddCandidate}
+                candidate={selectedCandidate}
+            />
+            <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </Box>
     );
 };
 
 export default Candidates;
+
+

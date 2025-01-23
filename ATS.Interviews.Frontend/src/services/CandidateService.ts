@@ -21,11 +21,11 @@ export const createCandidate = async (candidate: Candidate): Promise<Candidate> 
     return response.data;
 };
 
-export const updateCandidate = async (id: number, candidate: Candidate): Promise<void> => {
-    await axiosInstance.put(`/${id}`, candidate);
+export const updateCandidate = async (id: number, candidate: Candidate): Promise<Candidate> => {
+    const response = await axiosInstance.put<Candidate>(`/${id}`, candidate);
+    return response.data;
 };
 
 export const deleteCandidate = async (id: number): Promise<void> => {
     await axiosInstance.delete(`/${id}`);
 };
-
