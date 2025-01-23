@@ -11,3 +11,4 @@ export interface Question {
     inputType: InputType;
     inputOptions?: InputOption[];
 }
+
