@@ -238,7 +238,7 @@ const Interviews: React.FC = () => {
                 {interviews.map((interview) => {
                     const availableInterviewers = interviewers.filter(interviewer => !interview.interviewInterviewers.some(ii => ii.interviewerId === interviewer.id));
                     return (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={interview.id}>
+                        <Grid item xs={12} sm={8} md={6} lg={6} key={interview.id}>
                             <Card>
                                 <CardHeader
                                     title={`Interview with ${interview.candidate.firstName} ${interview.candidate.lastName}`}
@@ -252,7 +252,7 @@ const Interviews: React.FC = () => {
                                 <CardContent>
                                     {interview.jobDescriptionLink && (
                                         <Typography color="text.secondary">
-                                            Job Description: <a href={interview.jobDescriptionLink} target="_blank" rel="noopener noreferrer">{interview.jobDescriptionLink}</a>
+                                            <a href={interview.jobDescriptionLink} target="_blank" rel="noopener noreferrer">Job Description</a>
                                         </Typography>
                                     )}
                                     {interview.interviewInterviewers.length > 0 && (

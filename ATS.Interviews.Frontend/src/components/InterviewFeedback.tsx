@@ -119,14 +119,14 @@ const InterviewFeedback: React.FC = () => {
                     <Typography variant="h6" gutterBottom>
                         <Typography variant="body1" component="span" fontWeight="bold">Interviewer:</Typography> {interviewInterviewer.interviewer?.firstName} {interviewInterviewer.interviewer?.lastName}
                     </Typography>
+                    {interview.jobDescriptionLink && (
+                        <Typography variant="h6" gutterBottom>
+                            <a href={interview.jobDescriptionLink} target="_blank" rel="noopener noreferrer">Job Description</a>
+                        </Typography>
+                    )}
                     <Typography variant="h6" gutterBottom>
                         <Typography variant="body1" component="span" fontWeight="bold">Template:</Typography> {template.name}
                     </Typography>
-                    {interview.jobDescriptionLink && (
-                        <Typography variant="h6" gutterBottom>
-                            <Typography variant="body1" component="span" fontWeight="bold">Job Description:</Typography> <a href={interview.jobDescriptionLink} target="_blank" rel="noopener noreferrer">View Job Posting</a>
-                        </Typography>
-                    )}
                     <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
                         {interview.candidate.resumeLink && (
                             <Tooltip title="Resume">
@@ -258,5 +258,6 @@ const InterviewFeedback: React.FC = () => {
 };
 
 export default InterviewFeedback;
+
 
 
