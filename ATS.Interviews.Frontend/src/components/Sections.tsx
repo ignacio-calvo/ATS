@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, List, CircularProgress, Accordion, AccordionSummary, AccordionDetails, Box, Button, TextField, IconButton, FormControlLabel, Checkbox } from '@mui/material';
+import { Typography, List, CircularProgress, Accordion, AccordionSummary, AccordionDetails, Box, Button, TextField, IconButton, FormControlLabel, Checkbox, Tooltip } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DragHandleIcon from '@mui/icons-material/DragHandle';
+import InfoIcon from '@mui/icons-material/Info';
 import { DndContext, closestCenter, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -213,7 +214,12 @@ const Sections: React.FC = () => {
                                         <SortableItem key={question.id} id={question.id}>
                                             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, borderBottom: '1px solid #e0e0e0', pb: 1 }}>
                                                 <DragHandle id={question.id} />
-                                                <Typography sx={{ flexGrow: 1 }}>{question.text}</Typography>
+                                                <Typography sx={{ flexGrow: 1, textAlign: 'left' }}>{question.text}</Typography>
+                                                <Tooltip title={question.hint}>
+                                                    <IconButton>
+                                                        <InfoIcon />
+                                                    </IconButton>
+                                                </Tooltip>
                                                 <FormControlLabel
                                                     control={<Checkbox checked={question.isRequired} disabled />}
                                                     label="Required"
@@ -247,4 +253,5 @@ const Sections: React.FC = () => {
 };
 
 export default Sections;
+
 
