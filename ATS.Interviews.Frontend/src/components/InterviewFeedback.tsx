@@ -169,13 +169,15 @@ const InterviewFeedback: React.FC = () => {
                                     <Box key={question.id} sx={{ mb: 2 }}>
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                             <Typography variant="body1" gutterBottom>
-                                                {question.text}
+                                                {question.text} {question.isRequired && <span style={{ color: 'red' }}>*</span>}
                                             </Typography>
-                                            <Tooltip title={question.hint}>
-                                                <IconButton>
-                                                    <InfoIcon />
-                                                </IconButton>
-                                            </Tooltip>
+                                            {question.hint && (
+                                                <Tooltip title={question.hint}>
+                                                    <IconButton>
+                                                        <InfoIcon />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            )}
                                         </Box>
                                         {question.inputType === 'Text' && (
                                             <TextField
@@ -190,27 +192,28 @@ const InterviewFeedback: React.FC = () => {
                                         )}
                                         {question.inputType === 'Rating' && (
                                             <>
-                                                <ToggleButtonGroup
-                                                    value={feedbacks.get(question.id)?.rating || 0}
-                                                    exclusive
-                                                    onChange={(e, value) => handleFeedbackChange(question.id, 'rating', value)}
-                                                    sx={{ mb: 2 }}
-                                                >
-                                                    <ToggleButton value={1}>
-                                                        <ThumbDownIcon />
-                                                        <ThumbDownIcon />
-                                                    </ToggleButton>
-                                                    <ToggleButton value={2}>
-                                                        <ThumbDownIcon />
-                                                    </ToggleButton>
-                                                    <ToggleButton value={3}>
-                                                        <ThumbUpIcon />
-                                                    </ToggleButton>
-                                                    <ToggleButton value={4}>
-                                                        <ThumbUpIcon />
-                                                        <ThumbUpIcon />
-                                                    </ToggleButton>
-                                                </ToggleButtonGroup>
+                                                <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2 }}>
+                                                    <ToggleButtonGroup
+                                                        value={feedbacks.get(question.id)?.rating || 0}
+                                                        exclusive
+                                                        onChange={(e, value) => handleFeedbackChange(question.id, 'rating', value)}
+                                                    >
+                                                        <ToggleButton value={1}>
+                                                            <ThumbDownIcon />
+                                                            <ThumbDownIcon />
+                                                        </ToggleButton>
+                                                        <ToggleButton value={2}>
+                                                            <ThumbDownIcon />
+                                                        </ToggleButton>
+                                                        <ToggleButton value={3}>
+                                                            <ThumbUpIcon />
+                                                        </ToggleButton>
+                                                        <ToggleButton value={4}>
+                                                            <ThumbUpIcon />
+                                                            <ThumbUpIcon />
+                                                        </ToggleButton>
+                                                    </ToggleButtonGroup>
+                                                </Box>
                                                 <TextField
                                                     label="Comments"
                                                     fullWidth
@@ -258,6 +261,3 @@ const InterviewFeedback: React.FC = () => {
 };
 
 export default InterviewFeedback;
-
-
-
