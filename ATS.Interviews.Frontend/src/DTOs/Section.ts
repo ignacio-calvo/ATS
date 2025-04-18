@@ -6,4 +6,5 @@ export interface Section {
     name: string;
     questions: Question[];
     interviewTemplateSections: InterviewTemplateSection[];
+    order: number; // Added order field to support section ordering
 }

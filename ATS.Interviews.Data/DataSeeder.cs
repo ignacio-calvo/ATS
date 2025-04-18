@@ -17,6 +17,7 @@ namespace ATS.Interviews.Data
             var restSection = new Section
             {
                 Name = "REST",
+                Order = 1, // Set order for the section
                 Questions = new List<Question>
                     {
                         new Question { Text = "What is REST?", Hint = "Representational State Transfer", Order = 1 , InputType = InputType.Rating},
@@ -35,6 +36,7 @@ namespace ATS.Interviews.Data
             var dotNetSection = new Section
             {
                 Name = ".NET",
+                Order = 2, // Set order for the section
                 Questions = new List<Question>
                     {
                         new Question { Text = "What is .NET?", Hint = "A software development framework", Order = 1 , InputType = InputType.Rating},
@@ -53,6 +55,7 @@ namespace ATS.Interviews.Data
             var frontEndSection = new Section
             {
                 Name = "Front End (React)",
+                Order = 3, // Set order for the section
                 Questions = new List<Question>
                     {
                         new Question { Text = "What is JavaScript?", Hint = "A programming language for the web", Order = 1 , InputType = InputType.Rating},
@@ -71,6 +74,7 @@ namespace ATS.Interviews.Data
             var nodeSection = new Section
             {
                 Name = "NodeJS",
+                Order = 4, // Set order for the section
                 Questions = new List<Question>
                     {
                         new Question { Text = "What is NodeJS?", Hint = "A JavaScript runtime built on Chrome's V8 engine", Order = 1 , InputType = InputType.Rating},
@@ -89,6 +93,7 @@ namespace ATS.Interviews.Data
             var conclusionsSection = new Section
             {
                 Name = "Conclusions",
+                Order = 5, // Set order for the section
                 Questions = new List<Question>
                     {
                         new Question { Text = "English", Hint = "", Order = 1, IsRequired = true, InputType = InputType.Rating },

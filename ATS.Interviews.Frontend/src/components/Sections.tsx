@@ -43,7 +43,7 @@ const Sections: React.FC = () => {
     const [sections, setSections] = useState<Section[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(null);
+    const [selectedQuestion, setSelectedQuestion] = useState<Question | undefined>(undefined);
     const [newSectionName, setNewSectionName] = useState<string>('');
 
     useEffect(() => {

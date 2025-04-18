@@ -16,7 +16,11 @@ namespace ATS.Interviews.Business.Services
 
         public async Task<IEnumerable<Section>> GetSectionsAsync()
         {
-            return await _context.Sections.Include(s => s.Questions).ThenInclude(q => q.InputOptions).ToListAsync();
+            return await _context.Sections
+                .Include(s => s.Questions)
+                .ThenInclude(q => q.InputOptions)
+                .OrderBy(s => s.Order) // Ensure sections are ordered by the 'Order' field
+                .ToListAsync();
         }
 
         public async Task<Section> GetSectionByIdAsync(int id)
