@@ -66,13 +66,17 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ open, onClose, onSave, ques
                         label="Question Text"
                         value={text}
                         onChange={(e) => setText(e.target.value)}
-                        sx={{ mb: 2 }}
+                        sx={{ mb: 2, mt: 2 }}
+                        multiline
+                        rows={2}
                     />
                     <TextField
                         label="Hint"
                         value={hint}
                         onChange={(e) => setHint(e.target.value)}
                         sx={{ mb: 2 }}
+                        multiline
+                        rows={4}
                     />
                     <FormControlLabel
                         control={
@@ -128,5 +132,4 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ open, onClose, onSave, ques
 };
 
 export default QuestionForm;
-
 

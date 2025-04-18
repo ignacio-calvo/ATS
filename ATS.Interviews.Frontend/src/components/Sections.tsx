@@ -8,7 +8,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import { DndContext, closestCenter, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { getSections, createSection, addQuestion, updateQuestion, deleteQuestion } from '../services/SectionService';
+import { getSections, createSection, addQuestion, updateQuestion, deleteQuestion, deleteSection } from '../services/SectionService';
 import { Section } from '../DTOs/Section';
 import { Question } from '../DTOs/Question';
 import { InputType } from '../DTOs/InputType';
@@ -76,6 +76,15 @@ const Sections: React.FC = () => {
             setNewSectionName('');
         } catch (error) {
             console.error('Error adding section:', error);
+        }
+    };
+
+    const handleDeleteSection = async (sectionId: number) => {
+        try {
+            await deleteSection(sectionId);
+            setSections(sections.filter(section => section.id !== sectionId));
+        } catch (error) {
+            console.error('Error deleting section:', error);
         }
     };
 
@@ -205,7 +214,10 @@ const Sections: React.FC = () => {
                 {sections.map((section) => (
                     <Accordion key={section.id} sx={{ width: '100%' }}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography>{section.name}</Typography>
+                            <Typography sx={{ flexGrow: 1 }}>{section.name}</Typography>
+                            <IconButton onClick={(e) => { e.stopPropagation(); handleDeleteSection(section.id); }}>
+                                <DeleteIcon />
+                            </IconButton>
                         </AccordionSummary>
                         <AccordionDetails>
                             <DndContext collisionDetection={closestCenter} onDragEnd={(event) => handleDragEnd(event, section.id)}>
@@ -253,5 +265,3 @@ const Sections: React.FC = () => {
 };
 
 export default Sections;
-
-
