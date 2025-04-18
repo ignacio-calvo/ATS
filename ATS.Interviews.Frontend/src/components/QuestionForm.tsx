@@ -58,7 +58,7 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ open, onClose, onSave, ques
     };
 
     return (
-        <Dialog open={open} onClose={onClose}>
+        <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
             <DialogTitle>{question ? 'Edit Question' : 'Add Question'}</DialogTitle>
             <DialogContent>
                 <Box sx={{ display: 'flex', flexDirection: 'column', mb: 2 }}>
