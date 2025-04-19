@@ -359,4 +359,8 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
+# Environment files
+.env
+.env.*
+
 /ATS.Interviews.API/.env
