@@ -27,7 +27,7 @@ export class ATSService {
     this.token = response.data.token;
   }
 
-  async getPostulants(page: number = 0, pageSize: number = 20): Promise<ATSPostulants> {
+  async getPostulants(page: number = 0, pageSize: number = 20, filters: { vacancyId?: string; email?: string; nombre?: string; apellido?: string; stage?: string; status?: 'todos' | 'activos' | 'rechazados' } = {}): Promise<ATSPostulants> {
     if (!this.token) {
       throw new Error('Not authenticated. Please call authenticate() first.');
     }
@@ -37,6 +37,7 @@ export class ATSService {
         page,
         pageSize,
         token: this.token,
+        ...filters,
       },
     });
 
